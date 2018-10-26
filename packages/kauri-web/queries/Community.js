@@ -73,11 +73,8 @@ export const getCommunity = gql`
 `
 
 export const getAllCommunities = gql`
-  query searchCommunities ($size: Int = 12, $page: Int = 0) {
-    searchCommunities (
-      size: $size
-      page: $page
-    ) {
+  query searchCommunities($size: Int = 12, $page: Int = 0) {
+    searchCommunities(size: $size, page: $page) {
       content {
         id
         dateCreated
@@ -112,6 +109,79 @@ export const searchCommunities = gql`
         website
         avatar
         social
+      }
+    }
+  }
+`
+
+export const searchForOneCommunity = gql`
+  query searchCommunities($name: String) {
+    searchCommunities(size: 10, filter: { nameContains: $name }) {
+      content {
+        id
+        dateCreated
+        dateUpdated
+        creatorId
+        name
+        description
+        status
+        website
+        avatar
+        social
+        members {
+          id
+          name
+          role
+        }
+        approvedId {
+          type
+        }
+        pending {
+          ... on ArticleDTO {
+            id
+            version
+            title
+            content
+            dateCreated
+            datePublished
+            author {
+              id
+              name
+            }
+            status
+            attributes
+            vote {
+              totalVote
+            }
+          }
+          ... on CollectionDTO {
+            id
+            name
+          }
+        }
+        approved {
+          ... on ArticleDTO {
+            id
+            version
+            title
+            content
+            dateCreated
+            datePublished
+            author {
+              id
+              name
+            }
+            status
+            attributes
+            vote {
+              totalVote
+            }
+          }
+          ... on CollectionDTO {
+            id
+            name
+          }
+        }
       }
     }
   }

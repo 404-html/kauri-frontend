@@ -1,7 +1,7 @@
 import View from './View'
 import { connect } from 'react-redux'
 import { graphql, compose } from 'react-apollo'
-import { getCommunity } from '../../../queries/Community'
+import { searchForOneCommunity } from '../../../queries/Community'
 import withLoading from '../../../lib/with-loading'
 import withApolloError from '../../../lib/with-apollo-error'
 
@@ -14,10 +14,10 @@ export default compose(
     mapStateToProps,
     {}
   ),
-  graphql(getCommunity, {
+  graphql(searchForOneCommunity, {
     options: ({ category }) => ({
       variables: {
-        id: category,
+        name: 'kauri',
       },
     }),
   }),
